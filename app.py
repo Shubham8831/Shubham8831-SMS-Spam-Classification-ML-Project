@@ -1,23 +1,21 @@
 import streamlit as st
 import pickle
 import string
-import os
 import nltk
+import os
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
-# Option 1: Use the default download directory for NLTK data
-nltk.download('punkt')
-nltk.download('stopwords')
+# Check and download required NLTK resources if not present
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
 
-# Option 2: Use a custom directory (uncomment to use)
-# nltk_data_path = './nltk_data'
-# if not os.path.exists(nltk_data_path):
-#     os.makedirs(nltk_data_path)
-# os.environ['NLTK_DATA'] = nltk_data_path
-# nltk.data.path.append(nltk_data_path)
-# nltk.download('punkt', download_dir=nltk_data_path)
-# nltk.download('stopwords', download_dir=nltk_data_path)
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
 
 st.set_page_config(page_title="SMS Spam Classifier by Shubham",
                    page_icon="📩")
@@ -54,7 +52,6 @@ model = pickle.load(open('model.pkl','rb'))
 st.title("📩 Email/SMS :red[Spam] Classifier ")
 input_sms = st.text_area("Enter Your Message")
 if st.button('Predict'):
-
     # 1. Preprocess
     transformed_sms = transform_text(input_sms)
     # 2. Vectorize
