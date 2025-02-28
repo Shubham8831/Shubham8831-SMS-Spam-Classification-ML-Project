@@ -24,7 +24,7 @@ ps = PorterStemmer()
 
 def transform_text(text):
     text = text.lower()
-    text = nltk.word_tokenize(text)
+    text = nltk.word_tokenize(text,"english")
 
     y = []
     for i in text:
