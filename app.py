@@ -17,6 +17,12 @@ try:
 except LookupError:
     nltk.download('stopwords')
 
+# Download 'punkt_tab' in case it's required by the tokenizer in your environment
+try:
+    nltk.data.find('tokenizers/punkt_tab')
+except LookupError:
+    nltk.download('punkt_tab')
+
 st.set_page_config(page_title="SMS Spam Classifier by Shubham",
                    page_icon="📩")
 
@@ -24,7 +30,8 @@ ps = PorterStemmer()
 
 def transform_text(text):
     text = text.lower()
-    text = nltk.word_tokenize(text,"english")
+    # Use keyword argument for clarity to avoid potential misinterpretation
+    text = nltk.word_tokenize(text, language="english")
 
     y = []
     for i in text:
