@@ -2,10 +2,12 @@ import streamlit as st
 import pickle
 import string
 import nltk
-nltk.download('punkt')
-nltk.download('stopwords')
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+nltk.download('punkt', download_dir='./nltk_data')
+nltk.download('stopwords', download_dir='./nltk_data')
+
+nltk.data.path.append('./nltk_data')
 
 st.set_page_config(page_title="SMS Spam Classifier by Shubham",
                    page_icon="📩")
